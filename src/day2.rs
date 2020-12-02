@@ -46,8 +46,25 @@ pub fn solve_part1(input: &[Entry]) -> usize {
 }
 
 #[aoc(day2, part2)]
-pub fn solve_part2(input: &[Entry]) -> i32 {
-    todo!()
+pub fn solve_part2(input: &[Entry]) -> usize {
+    input
+        .into_iter()
+        .filter(|x| {
+            let a = x
+                .password
+                .chars()
+                .nth(x.min - 1)
+                .map(|c| c == x.char)
+                .unwrap();
+            let b = x
+                .password
+                .chars()
+                .nth(x.max - 1)
+                .map(|c| c == x.char)
+                .unwrap();
+            a ^ b
+        })
+        .count()
 }
 
 #[cfg(test)]
@@ -58,16 +75,32 @@ mod tests {
     #[test]
     fn test_part1_case1() {
         let entry: Entry = "1-3 a: abcde".parse().unwrap();
-        assert!(entry.is_valid());
+        assert_eq!(1, solve_part1(&[entry]));
     }
     #[test]
     fn test_part1_case2() {
         let entry: Entry = "1-3 b: cdefg".parse().unwrap();
-        assert!(!entry.is_valid());
+        assert_eq!(0, solve_part1(&[entry]));
     }
     #[test]
     fn test_part1_case3() {
         let entry: Entry = "2-9 c: ccccccccc".parse().unwrap();
-        assert!(entry.is_valid());
+        assert_eq!(1, solve_part1(&[entry]));
+    }
+
+    #[test]
+    fn test_part2_case1() {
+        let entry: Entry = "1-3 a: abcde".parse().unwrap();
+        assert_eq!(1, solve_part2(&[entry]));
+    }
+    #[test]
+    fn test_part2_case2() {
+        let entry: Entry = "1-3 b: cdefg".parse().unwrap();
+        assert_eq!(0, solve_part2(&[entry]));
+    }
+    #[test]
+    fn test_part2_case3() {
+        let entry: Entry = "2-9 c: ccccccccc".parse().unwrap();
+        assert_eq!(0, solve_part2(&[entry]));
     }
 }
