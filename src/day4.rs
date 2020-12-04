@@ -31,7 +31,6 @@ pub fn solve_part1(input: &[Item]) -> usize {
             let x = REQUIRED
                 .iter()
                 .all(|k| xs.iter().find(|(a, b)| &a.as_str() == k).is_some());
-            println!("{:?}={}", &xs, x);
             x
         })
         .count()
@@ -45,7 +44,6 @@ pub fn solve_part2(input: &[Item]) -> usize {
             let x = REQUIRED
                 .iter()
                 .all(|k| xs.iter().find(|(a, b)| &a.as_str() == k).is_some());
-            println!("{:?}={}", &xs, x);
             x
         })
         .filter(|xs| xs.iter().all(|(a, b)| validate(a, b)))
