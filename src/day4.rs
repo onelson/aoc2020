@@ -30,7 +30,7 @@ pub fn solve_part1(input: &[Item]) -> usize {
         .filter(|xs| {
             let x = REQUIRED
                 .iter()
-                .all(|k| xs.iter().find(|(a, b)| &a.as_str() == k).is_some());
+                .all(|k| xs.iter().find(|(a, _)| &a.as_str() == k).is_some());
             x
         })
         .count()
@@ -43,14 +43,14 @@ pub fn solve_part2(input: &[Item]) -> usize {
         .filter(|xs| {
             let x = REQUIRED
                 .iter()
-                .all(|k| xs.iter().find(|(a, b)| &a.as_str() == k).is_some());
+                .all(|k| xs.iter().find(|(a, _)| &a.as_str() == k).is_some());
             x
         })
         .filter(|xs| xs.iter().all(|(a, b)| validate(a, b)))
         .count()
 }
 
-const OPTIONAL: [&str; 1] = ["cid"];
+// const OPTIONAL: [&str; 1] = ["cid"];
 const REQUIRED: [&str; 7] = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"];
 
 fn validate(k: &str, v: &str) -> bool {

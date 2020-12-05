@@ -1,5 +1,3 @@
-use std::collections::HashSet;
-
 pub type Item = (Vec<Row>, Vec<Col>);
 
 pub enum Row {
