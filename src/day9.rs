@@ -1,16 +1,16 @@
 pub struct Item;
 
-#[aoc_generator(day8)]
+#[aoc_generator(day9)]
 pub fn input_generator(_input: &str) -> Vec<Item> {
     todo!()
 }
 
-#[aoc(day8, part1)]
+#[aoc(day9, part1)]
 pub fn solve_part1(_input: &[Item]) -> usize {
     todo!()
 }
 
-#[aoc(day8, part2)]
+#[aoc(day9, part2)]
 pub fn solve_part2(_input: &[Item]) -> usize {
     todo!()
 }
