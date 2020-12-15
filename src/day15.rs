@@ -12,31 +12,44 @@ pub fn solve_part1(input: &[Item]) -> i64 {
     generate(input, 2020)
 }
 
-fn speak(prev: i64, turn: usize, acc: &mut HashMap<i64, Vec<usize>>) -> i64 {
+#[derive(Debug)]
+struct History(Option<usize>, Option<usize>);
+
+impl History {
+    fn new(turn: usize) -> Self {
+        Self(Some(turn), None)
+    }
+    fn push(&mut self, turn: usize) {
+        self.1 = self.0.take();
+        self.0 = Some(turn);
+    }
+    fn delta(&self) -> i64 {
+        self.0.unwrap() as i64 - self.1.unwrap() as i64
+    }
+}
+
+fn speak(prev: i64, turn: usize, acc: &mut HashMap<i64, History>) -> i64 {
     if !acc.contains_key(&prev) {
         // dbg!(turn, prev, "new");
-        acc.insert(prev, vec![turn - 1]);
-
+        acc.insert(prev, History::new(turn - 1));
         0
     } else {
-        let v = acc.get_mut(&prev).unwrap();
-        v.push(turn - 1);
+        let hist = acc.get_mut(&prev).unwrap();
+        hist.push(turn - 1);
 
         // dbg!(turn, prev, &v);
-        let tail = v.iter().rev().take(2).collect::<Vec<_>>();
-        let diff = tail[0] - tail[1];
         // dbg!(turn, prev, diff);
-        diff as i64
+        hist.delta()
     }
 }
 
 fn generate(starting_numbers: &[i64], turns: usize) -> i64 {
-    let mut acc: HashMap<i64, Vec<usize>> = HashMap::new();
+    let mut acc: HashMap<i64, History> = HashMap::new();
 
     let seed_size = starting_numbers.len();
 
     for (turn, n) in starting_numbers[..seed_size - 1].iter().enumerate() {
-        acc.insert(*n, vec![turn + 1]);
+        acc.insert(*n, History::new(turn + 1));
     }
 
     let mut prev = starting_numbers[seed_size - 1];
